@@ -1,20 +1,21 @@
 package com.ralphlirio.itunes.ui.detail
 
+import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.bumptech.glide.RequestManager
+import com.google.gson.Gson
 import com.ralphlirio.itunes.R
 import com.ralphlirio.itunes.models.Track
 import com.ralphlirio.itunes.viewmodel.BaseFragment
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
-import java.text.DateFormat
-import java.text.SimpleDateFormat
-import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -30,6 +31,8 @@ class MovieDetail : BaseFragment() {
 
     @Inject
     lateinit var requestManager: RequestManager
+
+    private var track: Track? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,6 +70,7 @@ class MovieDetail : BaseFragment() {
         sharedViewModel.mutableTrack.removeObservers(viewLifecycleOwner)
         sharedViewModel.mutableTrack.observe(viewLifecycleOwner, Observer {
             setUpViews(it)
+            track = it
         })
     }
 
@@ -101,4 +105,27 @@ class MovieDetail : BaseFragment() {
             TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
             TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
     }
+
+    private fun processSharedPreference() {
+        val prefsEditor = mPrefs.edit()
+        val gson = Gson()
+        val json = gson.toJson(track)
+        prefsEditor.putString("previousTrack", json)
+        prefsEditor.putBoolean("hasClosed", true)
+        prefsEditor.commit()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        processSharedPreference()
+        Log.v(TAG, "MovieDetail: onStop ${track!!.artistName}")
+    }
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        mPrefs.edit().clear().commit()
+        Log.v(TAG, "MovieDetail: onDestroyView")
+    }
+
 }

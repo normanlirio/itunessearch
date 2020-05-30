@@ -1,6 +1,5 @@
 package com.ralphlirio.itunes.ui.main
 
-import android.graphics.Movie
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,18 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.RequestManager
+import com.google.gson.Gson
 import com.ralphlirio.itunes.R
-import com.ralphlirio.itunes.di.ViewModelProviderFactory
 import com.ralphlirio.itunes.models.Track
 import com.ralphlirio.itunes.ui.Resource
 import com.ralphlirio.itunes.ui.adapter.TrackAdapter
 import com.ralphlirio.itunes.ui.detail.MovieDetail
 import com.ralphlirio.itunes.viewmodel.BaseFragment
-import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_main.*
 import javax.inject.Inject
 
@@ -37,6 +33,8 @@ class MainFragment : BaseFragment(), TrackAdapter.OnTrackClickListener {
 
     @Inject
     lateinit var requestManager: RequestManager
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,11 +54,25 @@ class MainFragment : BaseFragment(), TrackAdapter.OnTrackClickListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        processSharedPreference()
         setupActionbar()
         initRecyclerView()
         subscribeObservers()
         setupActionbar()
 
+    }
+
+    private fun processSharedPreference() {
+        if(mPrefs.getBoolean("hasClosed", false)) {
+            val gson = Gson()
+            val json = mPrefs.getString("previousTrack", "")
+            val track = gson.fromJson(json, Track::class.java)
+            sharedViewModel.setMutableTrack(track)
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.container, MovieDetail::class.java, null)
+                .addToBackStack(null)
+                .commit()
+        }
     }
 
     private fun setupActionbar() {
