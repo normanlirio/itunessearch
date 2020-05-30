@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.bumptech.glide.RequestManager
 import com.google.gson.Gson
+import com.ralphlirio.itunes.MainActivity
 import com.ralphlirio.itunes.R
 import com.ralphlirio.itunes.models.Track
 import com.ralphlirio.itunes.viewmodel.BaseFragment
@@ -31,6 +32,9 @@ class MovieDetail : BaseFragment() {
 
     @Inject
     lateinit var requestManager: RequestManager
+
+    @Inject
+    lateinit var mainActivity: MainActivity
 
     private var track: Track? = null
 
@@ -55,6 +59,7 @@ class MovieDetail : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         setupActionbar()
         subscribeObservers()
+        mainActivity.hideLastVisited()
 
     }
 
@@ -82,9 +87,7 @@ class MovieDetail : BaseFragment() {
         textView_buyprice.text = track.currency + " " + track.trackPrice.toString()
         textView_rentprice.text = track.currency + " " + track.trackRentalPrice.toString()
 
-        val uri: Uri = Uri.parse(
-            track.previewUrl
-        )
+        val uri: Uri = Uri.parse(track.previewUrl)
         videoView1.setVideoURI(uri)
         videoView1.requestFocus()
         videoView1.start()
@@ -124,7 +127,8 @@ class MovieDetail : BaseFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        mPrefs.edit().clear().commit()
+        mPrefs.edit().remove("previousTrack").commit()
+        mPrefs.edit().remove("hasClosed").commit()
         Log.v(TAG, "MovieDetail: onDestroyView")
     }
 

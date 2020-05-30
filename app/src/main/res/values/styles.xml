@@ -4,7 +4,7 @@
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/itunes_color_4</item>
-        <item name="colorPrimaryDark">@color/itunes_color_2</item>
+        <item name="colorPrimaryDark">@color/itunes_color_4</item>
         <item name="colorAccent">@color/itunes_color_3</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>

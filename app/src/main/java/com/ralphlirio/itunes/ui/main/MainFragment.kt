@@ -17,6 +17,8 @@ import com.ralphlirio.itunes.ui.adapter.TrackAdapter
 import com.ralphlirio.itunes.ui.detail.MovieDetail
 import com.ralphlirio.itunes.viewmodel.BaseFragment
 import kotlinx.android.synthetic.main.fragment_main.*
+import java.sql.Timestamp
+import java.util.*
 import javax.inject.Inject
 
 
@@ -60,9 +62,13 @@ class MainFragment : BaseFragment(), TrackAdapter.OnTrackClickListener {
         subscribeObservers()
         setupActionbar()
 
+
+
     }
 
     private fun processSharedPreference() {
+
+
         if(mPrefs.getBoolean("hasClosed", false)) {
             val gson = Gson()
             val json = mPrefs.getString("previousTrack", "")
@@ -98,6 +104,7 @@ class MainFragment : BaseFragment(), TrackAdapter.OnTrackClickListener {
                 }
                 Resource.Status.SUCCESS -> {
                     Log.v(TAG, "observe Track: Success")
+                    saveLastVisit()
                     trackAdapter.setRequestManager(requestManager)
                     trackAdapter.setTrack(it.data!!.results!!)
                 }
@@ -116,4 +123,17 @@ class MainFragment : BaseFragment(), TrackAdapter.OnTrackClickListener {
             .commit()
     }
 
+    private fun saveLastVisit() {
+        val prefsEditor = mPrefs.edit()
+        prefsEditor.putString("lastVisited", getTimeStamp())
+        prefsEditor.putBoolean("hasVisited", true)
+        prefsEditor.commit()
+    }
+
+    private fun getTimeStamp(): String {
+        val date = Date()
+        val time: Long = date.time
+        val ts = Timestamp(time)
+        return ts.toString()
+    }
 }
