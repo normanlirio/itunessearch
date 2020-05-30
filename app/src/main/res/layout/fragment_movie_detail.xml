@@ -73,12 +73,6 @@
                        android:layout_height="wrap_content"
                        android:text="Genre"
                        android:textAppearance="?attr/textAppearanceBody2" />
-                   <TextView
-                       android:id="@+id/textView_price"
-                       android:layout_width="match_parent"
-                       android:layout_height="wrap_content"
-                       android:text="14.99"
-                       android:textAppearance="?attr/textAppearanceBody2" />
                </LinearLayout>
            </LinearLayout>
            <View
@@ -105,7 +99,6 @@
                        android:text="@string/director"
                        />
                    <TextView
-                       android:textStyle="italic"
                        android:textAppearance="?attr/textAppearanceBody2"
                        android:layout_width="match_parent"
                        android:layout_height="wrap_content"
@@ -138,14 +131,13 @@
                    android:layout_height="wrap_content"
                    android:layout_weight="1">
                    <TextView
-                       android:textStyle="italic"
+
                        android:textAppearance="?attr/textAppearanceBody2"
                        android:layout_width="match_parent"
                        android:layout_height="wrap_content"
                        android:text="@string/duration"
                        />
                    <TextView
-                       android:textStyle="italic"
                        android:textAppearance="?attr/textAppearanceBody2"
                        android:layout_width="match_parent"
                        android:layout_height="wrap_content"
@@ -168,7 +160,51 @@
                android:background="@android:color/black"/>
 
 
+            <LinearLayout
+                android:layout_marginBottom="50dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                >
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_marginRight="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Buy"
+                        android:textAppearance="?attr/textAppearanceBody2" />
+                    <TextView
+                        android:id="@+id/textView_buyprice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="14.99"
+                        android:textAppearance="?attr/textAppearanceBody2" />
+                </LinearLayout>
 
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_marginRight="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Rent"
+                        android:textAppearance="?attr/textAppearanceBody2" />
+                    <TextView
+                        android:id="@+id/textView_rentprice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="14.99"
+                        android:textAppearance="?attr/textAppearanceBody2" />
+                </LinearLayout>
+            </LinearLayout>
 
        </LinearLayout>
    </ScrollView>

@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.bumptech.glide.RequestManager
 import com.ralphlirio.itunes.R
+import com.ralphlirio.itunes.models.Track
 import com.ralphlirio.itunes.viewmodel.BaseFragment
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
 import java.text.DateFormat
@@ -52,7 +53,6 @@ class MovieDetail : BaseFragment() {
         setupActionbar()
         subscribeObservers()
 
-
     }
 
     private fun setupActionbar() {
@@ -66,25 +66,28 @@ class MovieDetail : BaseFragment() {
     private fun subscribeObservers() {
         sharedViewModel.mutableTrack.removeObservers(viewLifecycleOwner)
         sharedViewModel.mutableTrack.observe(viewLifecycleOwner, Observer {
-            textView_long_description.text = it.longDescription
-            requestManager.load(it.artworkUrl100).into(imageView_header)
-            textView_trackName.text = it.trackName
-            textView_genre.text = it.primaryGenreName
-            textView_price.text = it.trackPrice.toString()
-
-            val uri: Uri = Uri.parse(
-               it.previewUrl
-            )
-            videoView1.setVideoURI(uri)
-            videoView1.requestFocus()
-            videoView1.start()
-
-
-            textView_artistName.text = it.artistName
-            textView_releasedate.text = dateFormatter(it.releaseDate!!)
-
-            textView_duration.text = convertToHours(it.trackTimeMillis)
+            setUpViews(it)
         })
+    }
+
+    private fun setUpViews(track: Track) {
+        textView_long_description.text = track.longDescription
+        requestManager.load(track.artworkUrl100).into(imageView_header)
+        textView_trackName.text = track.trackName
+        textView_genre.text = track.primaryGenreName
+        textView_buyprice.text = track.currency + " " + track.trackPrice.toString()
+        textView_rentprice.text = track.currency + " " + track.trackRentalPrice.toString()
+
+        val uri: Uri = Uri.parse(
+            track.previewUrl
+        )
+        videoView1.setVideoURI(uri)
+        videoView1.requestFocus()
+        videoView1.start()
+
+        textView_artistName.text = track.artistName
+        textView_releasedate.text = dateFormatter(track.releaseDate!!)
+        textView_duration.text = convertToHours(track.trackTimeMillis)
     }
 
 
