@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">iTunesSearch</string>
+    <string name="director">Director</string>
+    <string name="release_date">Release Date</string>
+    <string name="duration">Duration</string>
+</resources>

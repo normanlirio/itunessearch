@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+   <ScrollView
+       android:fillViewport="true"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:orientation="vertical"
+           android:layout_margin="20dp"
+           >
+            <com.google.android.material.card.MaterialCardView
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="150dp"
+                app:cardElevation="4dp"
+                android:padding="10dp"
+                android:layout_margin="6dp"
+                app:cardUseCompatPadding="true"
+                app:cardPreventCornerOverlap="true"
+                app:cardBackgroundColor="@android:color/transparent"
+                >
+                <VideoView
+
+                    app:shapeAppearanceOverlay="@style/circleImageView"
+                    android:layout_marginBottom="@dimen/marginBottom"
+                    android:id="@+id/videoView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="150dp"
+                    />
+            </com.google.android.material.card.MaterialCardView>
+
+           <View
+               android:layout_marginBottom="@dimen/marginBottom"
+               android:layout_width="match_parent"
+               android:layout_height="1dp"
+               android:background="@android:color/black"/>
+           <LinearLayout
+               android:layout_marginBottom="@dimen/marginBottom"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal">
+
+               <com.google.android.material.imageview.ShapeableImageView
+                   app:shapeAppearanceOverlay="@style/circleImageView"
+                   android:id="@+id/imageView_header"
+                   android:layout_width="wrap_content"
+                   android:layout_height="100dp"
+                   android:background="?attr/colorPrimaryDark"
+                   android:scaleType="fitCenter" />
+               <LinearLayout
+                   android:layout_marginLeft="15dp"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:orientation="vertical">
+                   <TextView
+                       android:id="@+id/textView_trackName"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:text="Title"
+                       android:textAppearance="?attr/textAppearanceHeadline6" />
+
+                   <TextView
+                       android:id="@+id/textView_genre"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:text="Genre"
+                       android:textAppearance="?attr/textAppearanceBody2" />
+                   <TextView
+                       android:id="@+id/textView_price"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:text="14.99"
+                       android:textAppearance="?attr/textAppearanceBody2" />
+               </LinearLayout>
+           </LinearLayout>
+           <View
+               android:layout_marginBottom="@dimen/marginBottom"
+               android:layout_width="match_parent"
+               android:layout_height="1dp"
+               android:background="@android:color/black"/>
+
+           <LinearLayout
+               android:layout_marginBottom="@dimen/marginBottom"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal"
+               android:weightSum="3">
+               <LinearLayout
+                   android:orientation="vertical"
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="1">
+                   <TextView
+                       android:textAppearance="?attr/textAppearanceBody2"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:text="@string/director"
+                       />
+                   <TextView
+                       android:textStyle="italic"
+                       android:textAppearance="?attr/textAppearanceBody2"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:id="@+id/textView_artistName"
+                       />
+               </LinearLayout>
+               <LinearLayout
+                   android:orientation="vertical"
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="1">
+                   <TextView
+
+                       android:textAppearance="?attr/textAppearanceBody2"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:text="@string/release_date"
+                       />
+                   <TextView
+                       android:textAppearance="?attr/textAppearanceBody2"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:id="@+id/textView_releasedate" />
+
+               </LinearLayout>
+
+               <LinearLayout
+                   android:orientation="vertical"
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="1">
+                   <TextView
+                       android:textStyle="italic"
+                       android:textAppearance="?attr/textAppearanceBody2"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:text="@string/duration"
+                       />
+                   <TextView
+                       android:textStyle="italic"
+                       android:textAppearance="?attr/textAppearanceBody2"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:id="@+id/textView_duration"
+                       />
+               </LinearLayout>
+           </LinearLayout>
+
+           <TextView
+               android:textStyle="italic"
+               android:textAppearance="?attr/textAppearanceBody2"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:id="@+id/textView_long_description" />
+           <View
+               android:layout_marginTop="@dimen/marginBottom"
+               android:layout_marginBottom="@dimen/marginBottom"
+               android:layout_width="match_parent"
+               android:layout_height="1dp"
+               android:background="@android:color/black"/>
+
+
+
+
+       </LinearLayout>
+   </ScrollView>
+</LinearLayout>
