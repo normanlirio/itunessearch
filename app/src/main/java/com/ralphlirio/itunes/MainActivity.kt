@@ -62,11 +62,11 @@ class MainActivity : DaggerAppCompatActivity() {
         return when(item.itemId) {
             android.R.id.home -> {
                 if(supportFragmentManager.fragments.size == 0){
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.container, MainFragment::class.java, null)
-                        .commit()
+                   goToMainFragment()
                 } else {
-                    getPreferences(Context.MODE_PRIVATE).edit().clear().apply()
+                    val mPrefs = getPreferences(Context.MODE_PRIVATE)
+                    mPrefs.edit().remove("previousTrack").commit()
+                    mPrefs.edit().remove("hasClosed").commit()
                     supportFragmentManager.popBackStack()
                 }
 
@@ -77,5 +77,12 @@ class MainActivity : DaggerAppCompatActivity() {
             }
         }
 
+    }
+
+    private fun goToMainFragment() {
+        supportFragmentManager.beginTransaction()
+            .setCustomAnimations(R.anim.fragment_anim_entrance, R.anim.fragment_anim_exit)
+            .replace(R.id.container, MainFragment::class.java, null)
+            .commit()
     }
 }

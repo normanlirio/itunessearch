@@ -121,6 +121,7 @@ class MainFragment : BaseFragment(), TrackAdapter.OnTrackClickListener {
     override fun onTrackClick(track: Track) {
         sharedViewModel.setMutableTrack(track)
         requireActivity().supportFragmentManager.beginTransaction()
+            .setCustomAnimations(R.anim.fragment_open_enter, R.anim.fragment_close_exit)
             .replace(R.id.container, MovieDetail::class.java, null)
             .addToBackStack(null)
             .commit()
