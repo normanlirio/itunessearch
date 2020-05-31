@@ -10,6 +10,12 @@ import com.ralphlirio.itunes.network.MainApi
 import com.ralphlirio.itunes.ui.Resource
 import io.reactivex.schedulers.Schedulers
 
+/**
+ * repository for api calls
+ * @constructor allows to direclty get the mainApi
+ * @property api injected from AppModule
+ *
+ */
 class MainRepository(private val api: MainApi) {
 
     private var trackList: MediatorLiveData<Resource<ApiResultResponse>> = MediatorLiveData()
@@ -17,7 +23,7 @@ class MainRepository(private val api: MainApi) {
 
     /**
      * get the API Response and returns a LiveData wrapped in Resource Class for easy way to check the Status/ result of the response
-     *
+     *@return the api response via LiveData
      */
     fun getTracksFromApi(): LiveData<Resource<ApiResultResponse>> {
         trackList.value = Resource.loading(null)

@@ -10,6 +10,9 @@ import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
+/**
+ * Parent activity for the Fragments
+ */
 class MainActivity : DaggerAppCompatActivity() {
 
     @set:Inject
