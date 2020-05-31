@@ -18,6 +18,7 @@ import com.ralphlirio.itunes.ui.detail.MovieDetail
 import com.ralphlirio.itunes.viewmodel.BaseFragment
 import kotlinx.android.synthetic.main.fragment_main.*
 import java.sql.Timestamp
+import java.text.DateFormat
 import java.util.*
 import javax.inject.Inject
 
@@ -130,6 +131,7 @@ class MainFragment : BaseFragment(), TrackAdapter.OnTrackClickListener {
         val date = Date()
         val time: Long = date.time
         val ts = Timestamp(time)
-        return ts.toString()
+
+        return DateFormat.getDateTimeInstance().format(ts)
     }
 }

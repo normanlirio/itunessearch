@@ -7,6 +7,7 @@
     android:orientation="vertical"
     android:background="@drawable/gradient"
     tools:context=".MainActivity">
+
     <LinearLayout
         android:id="@+id/lastvisited_container"
         android:layout_margin="10dp"
@@ -14,12 +15,14 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
+            android:textStyle="italic"
             android:layout_marginRight="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Last Visited: "
             android:textAppearance="?attr/textAppearanceBody2" />
         <TextView
+            android:textStyle="italic"
             android:layout_marginRight="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
