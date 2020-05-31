@@ -16,18 +16,21 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
+            android:textColor="@color/light_grey"
             android:textStyle="italic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Last Visited: "
             android:textAppearance="?attr/textAppearanceBody2" />
+
         <TextView
-            android:textStyle="italic"
-            android:layout_marginRight="15dp"
+            android:id="@+id/textView_lastVisited"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView_lastVisited"
-            android:textAppearance="?attr/textAppearanceBody2" />
+            android:layout_marginRight="15dp"
+            android:textColor="@color/light_grey"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textStyle="italic" />
     </LinearLayout>
     <androidx.fragment.app.FragmentContainerView
         android:layout_height="match_parent"

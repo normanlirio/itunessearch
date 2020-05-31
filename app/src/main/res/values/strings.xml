@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">iTunes</string>
+    <string name="app_name">iTunes Search Demo</string>
     <string name="director">Director</string>
     <string name="release_date">Release Date</string>
     <string name="duration">Duration</string>

@@ -4,11 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardElevation="4dp"
+    app:cardCornerRadius="0dp"
     android:padding="10dp"
     android:layout_margin="6dp"
-    app:cardUseCompatPadding="true"
-    app:cardPreventCornerOverlap="true"
+    app:cardElevation="2dp"
+    app:cardBackgroundColor="@android:color/transparent"
     >
 
     <LinearLayout
@@ -36,7 +36,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <TextView
+                    android:textColor="@android:color/white"
                     android:id="@+id/textView_trackName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -44,12 +46,15 @@
                     android:textAppearance="?attr/textAppearanceBody1" />
 
                 <TextView
+                    android:textColor="@color/light_grey"
                     android:id="@+id/textView_genre"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Genre"
                     android:textAppearance="?attr/textAppearanceBody2" />
+
                 <TextView
+                    android:textColor="@color/light_grey"
                     android:id="@+id/textView_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
