@@ -3,4 +3,8 @@
     <string name="director">Director</string>
     <string name="release_date">Release Date</string>
     <string name="duration">Duration</string>
+    <string name="toast_message_1">No Internet connection. Make sure that Wi-Fi or mobile data  is turned on, then try again.</string>
+    <string name="has_visited">hasVisited</string>
+    <string name="last_visited">lastVisited</string>
+    <string name="empty_date">------</string>
 </resources>

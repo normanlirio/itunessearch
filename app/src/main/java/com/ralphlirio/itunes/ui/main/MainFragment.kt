@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.RequestManager
 import com.google.gson.Gson
+import com.ralphlirio.itunes.MainActivity
 import com.ralphlirio.itunes.R
 import com.ralphlirio.itunes.models.Track
 import com.ralphlirio.itunes.ui.Resource
@@ -37,6 +38,9 @@ class MainFragment : BaseFragment(), TrackAdapter.OnTrackClickListener {
     @Inject
     lateinit var requestManager: RequestManager
 
+    @Inject
+    lateinit var mainActivity: MainActivity
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -61,6 +65,8 @@ class MainFragment : BaseFragment(), TrackAdapter.OnTrackClickListener {
         initRecyclerView()
         subscribeObservers()
         setupActionbar()
+
+        mainActivity.showLastVisited()
 
     }
 

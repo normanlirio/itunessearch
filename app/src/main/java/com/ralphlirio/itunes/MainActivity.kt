@@ -27,16 +27,16 @@ class MainActivity : DaggerAppCompatActivity() {
         processSharedPreference()
 
         if(!hasNetwork) {
-            Toast.makeText(this, "No Internet connection. Make sure that Wi-Fi or mobile data  is turned on, then try again.", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.toast_message_1), Toast.LENGTH_LONG).show()
         }
     }
 
     private fun processSharedPreference() {
         val mPrefs = getPreferences(Context.MODE_PRIVATE)
-        if(mPrefs.getBoolean("hasVisited", false)) {
-            textView_lastVisited.text = mPrefs.getString("lastVisited", "")
+        if(mPrefs.getBoolean(getString(R.string.has_visited), false)) {
+            textView_lastVisited.text = mPrefs.getString(getString(R.string.last_visited), "")
         } else {
-            textView_lastVisited.text = "------"
+            textView_lastVisited.text = getString(R.string.empty_date)
         }
     }
 
@@ -54,7 +54,7 @@ class MainActivity : DaggerAppCompatActivity() {
         }
     }
 
-    private fun showLastVisited() {
+     fun showLastVisited() {
         lastvisited_container.visibility = View.VISIBLE
     }
 

@@ -59,8 +59,8 @@ class MovieDetail : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         setupActionbar()
         subscribeObservers()
-        mainActivity.hideLastVisited()
 
+        mainActivity.hideLastVisited()
     }
 
     private fun setupActionbar() {
