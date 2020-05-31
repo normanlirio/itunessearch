@@ -3,6 +3,9 @@ package com.ralphlirio.itunes.ui
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
 
+/**
+ * expose network status using a Resource class that encapsulate both the data and its state.
+ */
 class Resource<T>(
     @field:NonNull @param:NonNull val status: Status,
     @field:Nullable @param:Nullable val data: T?,

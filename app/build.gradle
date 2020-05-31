@@ -87,11 +87,6 @@ dependencies {
     //Convert Observable to LiveData
     implementation 'android.arch.lifecycle:reactivestreams:1.1.1'
 
-    //room db
-    def room_version = '2.2.5'
-    implementation "androidx.room:room-runtime:$room_version"
-    kapt "androidx.room:room-compiler:$room_version"
-
     //Material design
     implementation 'com.google.android.material:material:1.2.0-alpha06'
 

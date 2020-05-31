@@ -67,13 +67,23 @@ class MainFragment : BaseFragment(), TrackAdapter.OnTrackClickListener {
 
     }
 
+    /**
+     * check if the last screen was Moviedetail screen before closing.
+     * redirects the screen to Movie Detail screen if the user closed the app while on the Movie Detail screen
+     * Also sets the LiveData for setting up the information for the screen
+     * Passes the data to MovieDetail screen via SharedViewModel
+     */
     private fun processSharedPreference() {
-
         if(mPrefs.getBoolean("hasClosed", false)) {
+
+            //Convert the saved data to gson
             val gson = Gson()
             val json = mPrefs.getString("previousTrack", "")
             val track = gson.fromJson(json, Track::class.java)
+
+            // Set data for the screen
             sharedViewModel.setMutableTrack(track)
+
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.container, MovieDetail::class.java, null)
                 .addToBackStack(null)
@@ -81,6 +91,10 @@ class MainFragment : BaseFragment(), TrackAdapter.OnTrackClickListener {
         }
     }
 
+    /**
+     * removes the elevation or drop shadow of the action bar
+     * remove the back button
+     */
     private fun setupActionbar() {
         val appcompatActivity =  (requireActivity() as AppCompatActivity)
         appcompatActivity.supportActionBar!!.elevation = 0f
@@ -89,13 +103,18 @@ class MainFragment : BaseFragment(), TrackAdapter.OnTrackClickListener {
 
     }
 
-
+    /**
+     * sets up the list
+     */
     private fun initRecyclerView() {
         recyclerView_trackList.layoutManager = LinearLayoutManager(requireContext())
         recyclerView_trackList.adapter = trackAdapter
         trackAdapter.setClickListener(this)
     }
 
+    /**
+     * populate the list using LiveData and Observers
+     */
     private fun subscribeObservers() {
         mainViewModel.subscribeTrack().removeObservers(viewLifecycleOwner)
         mainViewModel.subscribeTrack().observe(viewLifecycleOwner, Observer {
@@ -116,6 +135,9 @@ class MainFragment : BaseFragment(), TrackAdapter.OnTrackClickListener {
         })
     }
 
+    /**
+     * User click listener
+     */
     override fun onTrackClick(track: Track) {
         sharedViewModel.setMutableTrack(track)
         requireActivity().supportFragmentManager.beginTransaction()
@@ -125,6 +147,9 @@ class MainFragment : BaseFragment(), TrackAdapter.OnTrackClickListener {
             .commit()
     }
 
+    /**
+     *  save the timestamp of the last visit of the user to offline storage
+     */
     private fun saveLastVisit() {
         val prefsEditor = mPrefs.edit()
         prefsEditor.putString("lastVisited", getTimeStamp())
@@ -132,6 +157,9 @@ class MainFragment : BaseFragment(), TrackAdapter.OnTrackClickListener {
         prefsEditor.commit()
     }
 
+    /**
+     * returns the timestamp of the last visit of the user
+     */
     private fun getTimeStamp(): String {
         val date = Date()
         val time: Long = date.time

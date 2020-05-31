@@ -1,5 +1,6 @@
 package com.ralphlirio.itunes.ui.detail
 
+import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.net.Uri
@@ -50,7 +51,6 @@ class MovieDetail : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_movie_detail, container, false)
     }
@@ -60,9 +60,14 @@ class MovieDetail : BaseFragment() {
         setupActionbar()
         subscribeObservers()
 
+        //hide the last visited label
         mainActivity.hideLastVisited()
     }
 
+    /**
+     * Sets up the action bar
+     * displaying the back button
+     */
     private fun setupActionbar() {
         val appcompatActivity =  (requireActivity() as AppCompatActivity)
         appcompatActivity.supportActionBar!!.elevation = 0f
@@ -71,6 +76,9 @@ class MovieDetail : BaseFragment() {
 
     }
 
+    /**
+     * Subscribes the observers to get the information passed from the SharedViewModel
+     */
     private fun subscribeObservers() {
         sharedViewModel.mutableTrack.removeObservers(viewLifecycleOwner)
         sharedViewModel.mutableTrack.observe(viewLifecycleOwner, Observer {
@@ -79,6 +87,9 @@ class MovieDetail : BaseFragment() {
         })
     }
 
+    /**
+     * Sets up the information for the screen
+     */
     private fun setUpViews(track: Track) {
         textView_long_description.text = track.longDescription
         requestManager.load(track.artworkUrl100).into(imageView_header)
@@ -97,18 +108,35 @@ class MovieDetail : BaseFragment() {
         textView_duration.text = convertToHours(track.trackTimeMillis)
     }
 
-
+    /**
+     * Format date for the release date
+     */
     private fun dateFormatter(inputDate : String) : String {
         val indexOfT= inputDate.indexOf("T")
         return inputDate.substring(0, indexOfT)
     }
 
+    /**
+     *  convert the time millis to Hours for the duration of the movie
+     */
     private fun convertToHours(millis : Long) : String {
         return String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millis),
             TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
             TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
     }
 
+
+    /**
+     * saving to onStop means the user either minimized, closed or returned back to main screen
+     */
+    override fun onStop() {
+        super.onStop()
+        processSharedPreference()
+    }
+
+    /**
+     * save data to offline storage
+     */
     private fun processSharedPreference() {
         val prefsEditor = mPrefs.edit()
         val gson = Gson()
@@ -118,18 +146,22 @@ class MovieDetail : BaseFragment() {
         prefsEditor.commit()
     }
 
-    override fun onStop() {
-        super.onStop()
-        processSharedPreference()
-        Log.v(TAG, "MovieDetail: onStop ${track!!.artistName}")
+    /**
+     * removing the saved data means that the user returned to main screen
+     *
+     */
+    override fun onDestroyView() {
+        super.onDestroyView()
+        removeSharedPreferenceFor()
     }
 
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    /**
+     * removes the shared preferences saved data.
+     */
+    private fun removeSharedPreferenceFor() {
         mPrefs.edit().remove("previousTrack").commit()
         mPrefs.edit().remove("hasClosed").commit()
-        Log.v(TAG, "MovieDetail: onDestroyView")
     }
 
 }

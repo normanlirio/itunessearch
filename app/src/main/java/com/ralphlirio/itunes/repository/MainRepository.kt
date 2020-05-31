@@ -15,6 +15,10 @@ class MainRepository(private val api: MainApi) {
     private var trackList: MediatorLiveData<Resource<ApiResultResponse>> = MediatorLiveData()
     private val TAG = javaClass.simpleName
 
+    /**
+     * get the API Response and returns a LiveData wrapped in Resource Class for easy way to check the Status/ result of the response
+     *
+     */
     fun getTracksFromApi(): LiveData<Resource<ApiResultResponse>> {
         trackList.value = Resource.loading(null)
 
@@ -27,12 +31,10 @@ class MainRepository(private val api: MainApi) {
                     apiResultResponse
                 }
             .map {
-
                 if(it.resultCount!! < 0) {
-                    Log.v(TAG, "getTracksFromApi: Result count -1 ${it.resultCount}")
+
                     Resource.error("Oops, Something went wrong", null)
                 }
-
                 Resource.success(it)
             }
                 .subscribeOn(Schedulers.io())

@@ -2,10 +2,8 @@ package com.ralphlirio.itunes.di.app
 
 import android.app.Application
 import android.content.Context
-import android.graphics.drawable.Drawable
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
-import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
@@ -28,15 +26,11 @@ class AppModule {
     fun provideRequestOptions() : RequestOptions =
         RequestOptions.placeholderOf(R.drawable.ic_icons8_itunes_100).error(R.drawable.ic_icons8_itunes_100)
 
+
     @Singleton
     @Provides
     fun provideGlideInstance(application: Application, requestOptions: RequestOptions) : RequestManager =
         Glide.with(application).setDefaultRequestOptions(requestOptions)
-
-    @Singleton
-    @Provides
-    fun provideImageHeader(application: Application) : Drawable =
-        ContextCompat.getDrawable(application, R.drawable.ic_apple_itunes)!!
 
 
     @Singleton

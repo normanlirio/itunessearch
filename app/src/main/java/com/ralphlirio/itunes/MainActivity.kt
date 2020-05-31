@@ -1,19 +1,14 @@
 package com.ralphlirio.itunes
 
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import androidx.fragment.app.Fragment
-import com.ralphlirio.itunes.ui.detail.MovieDetail
 import com.ralphlirio.itunes.ui.main.MainFragment
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_main.*
 import javax.inject.Inject
-import javax.inject.Named
 
 class MainActivity : DaggerAppCompatActivity() {
 
@@ -26,57 +21,73 @@ class MainActivity : DaggerAppCompatActivity() {
         init()
         processSharedPreference()
 
-        if(!hasNetwork) {
+        /**
+         * check if app has internet connection
+         */
+        if (!hasNetwork) {
             Toast.makeText(this, getString(R.string.toast_message_1), Toast.LENGTH_LONG).show()
         }
     }
 
+    /**
+     * checks if the user has visited the app for the first time or get the timestamp of the user's last visit
+     */
     private fun processSharedPreference() {
         val mPrefs = getPreferences(Context.MODE_PRIVATE)
-        if(mPrefs.getBoolean(getString(R.string.has_visited), false)) {
+        if (mPrefs.getBoolean(getString(R.string.has_visited), false)) {
             textView_lastVisited.text = mPrefs.getString(getString(R.string.last_visited), "")
         } else {
             textView_lastVisited.text = getString(R.string.empty_date)
         }
     }
 
+    /**
+     * Hides the last visited label when user is on Movie detail screen
+     */
     fun hideLastVisited() {
         lastvisited_container.visibility = View.GONE
     }
 
-
-    private fun init(){
+    /**
+     * Initialize the MainFragment and show the time stamp of last visited label
+     */
+    private fun init() {
         showLastVisited()
-        if(supportFragmentManager.fragments.size == 0){
+        if (supportFragmentManager.fragments.size == 0) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.container, MainFragment::class.java, null)
                 .commit()
         }
     }
 
-     fun showLastVisited() {
+    /**
+     *  to be able to show the label outside of main activity
+     */
+    fun showLastVisited() {
         lastvisited_container.visibility = View.VISIBLE
     }
 
+    /**
+     * when back button is clicked on MovieDetail Fragment, returns TRUE when the user has closed the app while inside the MovieDetail screen.
+     * back button should directly go to Main screen when opening app from Movie detail screen.
+     *
+     * returns FALSE when the user presses the back button without closing the app, removing the settings saved as the user opts to not to close the app.
+     *
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId) {
+        return when (item.itemId) {
             android.R.id.home -> {
-                if(supportFragmentManager.fragments.size == 0){
-                   goToMainFragment()
+                if (supportFragmentManager.fragments.size == 0) {
+                    goToMainFragment()
                 } else {
-                    val mPrefs = getPreferences(Context.MODE_PRIVATE)
-                    mPrefs.edit().remove("previousTrack").commit()
-                    mPrefs.edit().remove("hasClosed").commit()
                     supportFragmentManager.popBackStack()
                 }
-
                 true
             }
             else -> {
                 return super.onOptionsItemSelected(item)
             }
         }
-
     }
 
     private fun goToMainFragment() {

@@ -10,7 +10,6 @@ class ViewModelProviderFactory @Inject constructor(private val creators: Map<Cla
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         var creator: Provider<out ViewModel>? = creators[modelClass]
         if (creator == null) { // if the viewmodel has not been created
-
             // loop through the allowable keys (aka allowed classes with the @ViewModelKey)
             for ((key, value) in creators) {
 
@@ -21,7 +20,6 @@ class ViewModelProviderFactory @Inject constructor(private val creators: Map<Cla
                 }
             }
         }
-
         // if this is not one of the allowed keys, throw exception
         requireNotNull(creator) { "unknown model class $modelClass" }
 
@@ -31,10 +29,6 @@ class ViewModelProviderFactory @Inject constructor(private val creators: Map<Cla
         } catch (e: Exception) {
             throw RuntimeException(e)
         }
-    }
-
-    companion object {
-        private val TAG = javaClass.simpleName
     }
 
 }
