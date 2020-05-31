@@ -36,8 +36,6 @@ class MainFragment : BaseFragment(), TrackAdapter.OnTrackClickListener {
     @Inject
     lateinit var requestManager: RequestManager
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -57,17 +55,15 @@ class MainFragment : BaseFragment(), TrackAdapter.OnTrackClickListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         processSharedPreference()
+
         setupActionbar()
         initRecyclerView()
         subscribeObservers()
         setupActionbar()
 
-
-
     }
 
     private fun processSharedPreference() {
-
 
         if(mPrefs.getBoolean("hasClosed", false)) {
             val gson = Gson()
