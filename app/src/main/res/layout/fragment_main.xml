@@ -10,6 +10,13 @@
     app:cardPreventCornerOverlap="true"
 
     >
+    <ProgressBar
+        android:id="@+id/loading_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTintMode="src_atop"
+        android:indeterminateTint="@color/itunes_color_4"
+        android:layout_gravity="center" />
 
     <ScrollView
         android:layout_marginTop="12dp"

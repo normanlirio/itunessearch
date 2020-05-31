@@ -60,12 +60,9 @@ class MainFragment : BaseFragment(), TrackAdapter.OnTrackClickListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         processSharedPreference()
-
         setupActionbar()
         initRecyclerView()
         subscribeObservers()
-        setupActionbar()
-
         mainActivity.showLastVisited()
 
     }
@@ -92,6 +89,7 @@ class MainFragment : BaseFragment(), TrackAdapter.OnTrackClickListener {
 
     }
 
+
     private fun initRecyclerView() {
         recyclerView_trackList.layoutManager = LinearLayoutManager(requireContext())
         recyclerView_trackList.adapter = trackAdapter
@@ -103,16 +101,16 @@ class MainFragment : BaseFragment(), TrackAdapter.OnTrackClickListener {
         mainViewModel.subscribeTrack().observe(viewLifecycleOwner, Observer {
             when(it.status) {
                 Resource.Status.ERROR -> {
-                    Log.v(TAG, "observe Track: Error")
+                    loading_spinner.visibility = View.GONE
                 }
                 Resource.Status.SUCCESS -> {
-                    Log.v(TAG, "observe Track: Success")
+                    loading_spinner.visibility = View.GONE
                     saveLastVisit()
                     trackAdapter.setRequestManager(requestManager)
                     trackAdapter.setTrack(it.data!!.results!!)
                 }
                 Resource.Status.LOADING -> {
-                    Log.v(TAG, "observe Track: Loading")
+                    loading_spinner.visibility = View.VISIBLE
                 }
             }
         })
