@@ -16,5 +16,4 @@ abstract class MainViewModelsModule {
     @ViewModelKey(MainViewModel::class)
     abstract fun bindMainViewModel(viewModel: MainViewModel) : ViewModel
 
-
 }

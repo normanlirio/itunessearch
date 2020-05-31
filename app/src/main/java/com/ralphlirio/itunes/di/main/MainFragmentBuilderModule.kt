@@ -1,6 +1,6 @@
 package com.ralphlirio.itunes.di.main
 
-import com.ralphlirio.itunes.ui.detail.MovieDetail
+import com.ralphlirio.itunes.ui.detail.TrackDetail
 import com.ralphlirio.itunes.ui.main.MainFragment
 import com.ralphlirio.itunes.viewmodel.BaseFragment
 import dagger.Module
@@ -13,7 +13,7 @@ abstract class MainFragmentBuilderModule {
     abstract fun contributeMainFragment() : MainFragment
 
     @ContributesAndroidInjector
-    abstract fun contributeMovieDetailFragment() : MovieDetail
+    abstract fun contributeTrackDetailFragment() : TrackDetail
 
     @ContributesAndroidInjector
     abstract fun contributeBaseFragment() : BaseFragment

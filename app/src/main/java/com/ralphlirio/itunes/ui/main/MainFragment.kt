@@ -15,7 +15,7 @@ import com.ralphlirio.itunes.R
 import com.ralphlirio.itunes.models.Track
 import com.ralphlirio.itunes.ui.Resource
 import com.ralphlirio.itunes.ui.adapter.TrackAdapter
-import com.ralphlirio.itunes.ui.detail.MovieDetail
+import com.ralphlirio.itunes.ui.detail.TrackDetail
 import com.ralphlirio.itunes.viewmodel.BaseFragment
 import kotlinx.android.synthetic.main.fragment_main.*
 import java.sql.Timestamp
@@ -23,14 +23,7 @@ import java.text.DateFormat
 import java.util.*
 import javax.inject.Inject
 
-
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 class MainFragment : BaseFragment(), TrackAdapter.OnTrackClickListener {
-    private var param1: String? = null
-    private var param2: String? = null
-
-    private val TAG = javaClass.simpleName
 
     @Inject
     lateinit var trackAdapter: TrackAdapter
@@ -43,10 +36,7 @@ class MainFragment : BaseFragment(), TrackAdapter.OnTrackClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+        arguments?.let {}
     }
 
     override fun onCreateView(
@@ -68,13 +58,13 @@ class MainFragment : BaseFragment(), TrackAdapter.OnTrackClickListener {
     }
 
     /**
-     * check if the last screen was Moviedetail screen before closing.
+     * check if the last screen was MovieDetail screen before closing.
      * redirects the screen to Movie Detail screen if the user closed the app while on the Movie Detail screen
      * Also sets the LiveData for setting up the information for the screen
      * Passes the data to MovieDetail screen via SharedViewModel
      */
     private fun processSharedPreference() {
-        if(mPrefs.getBoolean("hasClosed", false)) {
+        if (mPrefs.getBoolean("hasClosed", false)) {
 
             //Convert the saved data to gson
             val gson = Gson()
@@ -85,7 +75,7 @@ class MainFragment : BaseFragment(), TrackAdapter.OnTrackClickListener {
             sharedViewModel.setMutableTrack(track)
 
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.container, MovieDetail::class.java, null)
+                .replace(R.id.container, TrackDetail::class.java, null)
                 .addToBackStack(null)
                 .commit()
         }
@@ -96,7 +86,7 @@ class MainFragment : BaseFragment(), TrackAdapter.OnTrackClickListener {
      * remove the back button
      */
     private fun setupActionbar() {
-        val appcompatActivity =  (requireActivity() as AppCompatActivity)
+        val appcompatActivity = (requireActivity() as AppCompatActivity)
         appcompatActivity.supportActionBar!!.elevation = 0f
         appcompatActivity.supportActionBar!!.setDisplayHomeAsUpEnabled(false)
         appcompatActivity.supportActionBar!!.setDisplayShowHomeEnabled(false)
@@ -118,9 +108,10 @@ class MainFragment : BaseFragment(), TrackAdapter.OnTrackClickListener {
     private fun subscribeObservers() {
         mainViewModel.subscribeTrack().removeObservers(viewLifecycleOwner)
         mainViewModel.subscribeTrack().observe(viewLifecycleOwner, Observer {
-            when(it.status) {
+            when (it.status) {
                 Resource.Status.ERROR -> {
                     loading_spinner.visibility = View.GONE
+                    Log.v(tag, "Error: ${it.message}")
                 }
                 Resource.Status.SUCCESS -> {
                     loading_spinner.visibility = View.GONE
@@ -142,7 +133,7 @@ class MainFragment : BaseFragment(), TrackAdapter.OnTrackClickListener {
         sharedViewModel.setMutableTrack(track)
         requireActivity().supportFragmentManager.beginTransaction()
             .setCustomAnimations(R.anim.fragment_open_enter, R.anim.fragment_close_exit)
-            .replace(R.id.container, MovieDetail::class.java, null)
+            .replace(R.id.container, TrackDetail::class.java, null)
             .addToBackStack(null)
             .commit()
     }
@@ -154,7 +145,7 @@ class MainFragment : BaseFragment(), TrackAdapter.OnTrackClickListener {
         val prefsEditor = mPrefs.edit()
         prefsEditor.putString("lastVisited", getTimeStamp())
         prefsEditor.putBoolean("hasVisited", true)
-        prefsEditor.commit()
+        prefsEditor.apply()
     }
 
     /**

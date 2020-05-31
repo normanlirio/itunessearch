@@ -5,6 +5,9 @@ import androidx.lifecycle.ViewModelProvider
 import javax.inject.Inject
 import javax.inject.Provider
 
+/**
+ * This class enables injection for ViewModel constructors
+ */
 class ViewModelProviderFactory @Inject constructor(private val creators: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
@@ -30,5 +33,4 @@ class ViewModelProviderFactory @Inject constructor(private val creators: Map<Cla
             throw RuntimeException(e)
         }
     }
-
 }

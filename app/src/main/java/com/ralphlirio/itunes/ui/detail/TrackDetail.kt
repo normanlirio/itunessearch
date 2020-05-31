@@ -1,11 +1,7 @@
 package com.ralphlirio.itunes.ui.detail
 
-import android.content.Context
-import android.content.Context.MODE_PRIVATE
-import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,15 +17,10 @@ import kotlinx.android.synthetic.main.fragment_movie_detail.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-class MovieDetail : BaseFragment() {
-    private var param1: String? = null
-    private var param2: String? = null
-
-    private val TAG = javaClass.simpleName
+/*
+ * Fragment for the MovieDetail screen
+ */
+class TrackDetail : BaseFragment() {
 
     @Inject
     lateinit var requestManager: RequestManager
@@ -41,10 +32,7 @@ class MovieDetail : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+        arguments?.let {}
     }
 
     override fun onCreateView(
@@ -65,11 +53,10 @@ class MovieDetail : BaseFragment() {
     }
 
     /**
-     * Sets up the action bar
-     * displaying the back button
+     * Sets up the action bar displaying the back button
      */
     private fun setupActionbar() {
-        val appcompatActivity =  (requireActivity() as AppCompatActivity)
+        val appcompatActivity = (requireActivity() as AppCompatActivity)
         appcompatActivity.supportActionBar!!.elevation = 0f
         appcompatActivity.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         appcompatActivity.supportActionBar!!.setDisplayShowHomeEnabled(true)
@@ -89,14 +76,15 @@ class MovieDetail : BaseFragment() {
 
     /**
      * Sets up the information for the screen
+     * @param track object that contains movie information from API
      */
     private fun setUpViews(track: Track) {
         textView_long_description.text = track.longDescription
         requestManager.load(track.artworkUrl100).into(imageView_header)
         textView_trackName.text = track.trackName
         textView_genre.text = track.primaryGenreName
-        textView_buyprice.text = track.currency + " " + track.trackPrice.toString()
-        textView_rentprice.text = track.currency + " " + track.trackRentalPrice.toString()
+        textView_buyprice.text = track.currency.plus(" " + track.trackPrice)
+        textView_rentprice.text = track.currency.plus(" " + track.trackRentalPrice)
 
         val uri: Uri = Uri.parse(track.previewUrl)
         videoView1.setVideoURI(uri)
@@ -104,64 +92,78 @@ class MovieDetail : BaseFragment() {
         videoView1.start()
 
         textView_artistName.text = track.artistName
-        textView_releasedate.text = dateFormatter(track.releaseDate!!)
-        textView_duration.text = convertToHours(track.trackTimeMillis)
+        textView_releasedate.text = removeTimeFromDate(track.releaseDate!!)
+        textView_duration.text = convertTime(track.trackTimeMillis)
     }
 
     /**
-     * Format date for the release date
+     * Removes the time section of the date string
+     * @param inputDate e.g., "2018-10-18T07:00:00Z"
+     * @return date without the time e.g., "2018-10-18"
      */
-    private fun dateFormatter(inputDate : String) : String {
-        val indexOfT= inputDate.indexOf("T")
+    private fun removeTimeFromDate(inputDate: String): String {
+        val indexOfT = inputDate.indexOf("T")
         return inputDate.substring(0, indexOfT)
     }
 
     /**
-     *  convert the time millis to Hours for the duration of the movie
+     *  Convert the time millis to Hours, minutes, seconds for the duration of the movie
+     *  @param millis amount of time in milliseconds
+     *  @return readable format of time in hours, minutes and seconds
      */
-    private fun convertToHours(millis : Long) : String {
-        return String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millis),
-            TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
-            TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
+    private fun convertTime(millis: Long): String {
+        return String.format(
+            "%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millis),
+            TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(
+                TimeUnit.MILLISECONDS.toHours(
+                    millis
+                )
+            ),
+            TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(
+                TimeUnit.MILLISECONDS.toMinutes(
+                    millis
+                )
+            )
+        )
     }
 
 
     /**
-     * saving to onStop means the user either minimized, closed or returned back to main screen
+     * Save data to online storage when
+     * user minimizes or closes the app, or goes back to main screen
      */
     override fun onStop() {
         super.onStop()
-        processSharedPreference()
+        saveDataToSharedPreferences()
     }
 
     /**
-     * save data to offline storage
+     * Save data to shared preferences
      */
-    private fun processSharedPreference() {
+    private fun saveDataToSharedPreferences() {
         val prefsEditor = mPrefs.edit()
         val gson = Gson()
         val json = gson.toJson(track)
         prefsEditor.putString("previousTrack", json)
         prefsEditor.putBoolean("hasClosed", true)
-        prefsEditor.commit()
+        prefsEditor.apply()
     }
 
     /**
-     * removing the saved data means that the user returned to main screen
-     *
+     * Remove saved data from shared preferences when user goes back to main screen
      */
     override fun onDestroyView() {
         super.onDestroyView()
-        removeSharedPreferenceFor()
+        removeDataFromSharedPreferences()
     }
 
 
     /**
-     * removes the shared preferences saved data.
+     * Removes saved data from shared preferences
      */
-    private fun removeSharedPreferenceFor() {
-        mPrefs.edit().remove("previousTrack").commit()
-        mPrefs.edit().remove("hasClosed").commit()
+    private fun removeDataFromSharedPreferences() {
+        mPrefs.edit().remove("previousTrack").apply()
+        mPrefs.edit().remove("hasClosed").apply()
     }
 
 }

@@ -70,13 +70,6 @@ class MainActivity : DaggerAppCompatActivity() {
         lastvisited_container.visibility = View.VISIBLE
     }
 
-    /**
-     * when back button is clicked on MovieDetail Fragment, returns TRUE when the user has closed the app while inside the MovieDetail screen.
-     * back button should directly go to Main screen when opening app from Movie detail screen.
-     *
-     * returns FALSE when the user presses the back button without closing the app, removing the settings saved as the user opts to not to close the app.
-     *
-     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
