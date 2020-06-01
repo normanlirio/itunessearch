@@ -3,6 +3,7 @@
 - term = star
 - country =  au
 - media = movie
+
 (iTunes Web Service Documentation: https://affiliate.itunes.apple.com/resources/documentation/itunes-store-web-service-search-api/#searching)
 
 This app implements MVVM architecture using Dagger2, RxJava, Retrofit, and Glide.
