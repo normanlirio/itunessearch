@@ -84,7 +84,6 @@ class TrackDetail : BaseFragment() {
         requestManager.load(track.artworkUrl100).into(imageView_header)
         textView_trackName.text = track.trackName
         textView_genre.text = track.primaryGenreName
-        Log.v("TEST", "TEST: ${track.trackHdPrice}")
         textView_buyprice.text = track.currency.plus(" " + track.trackPrice)
         textView_rentprice.text = track.currency.plus(" " + track.trackRentalPrice)
 
