@@ -29,21 +29,22 @@
             android:id="@+id/imageView_trackCover"
             android:layout_width="wrap_content"
             android:layout_height="100dp"
-            android:background="?attr/colorPrimaryDark"
             android:scaleType="fitCenter" />
             <LinearLayout
+                android:layout_marginTop="3dp"
                 android:layout_marginLeft="15dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <TextView
+                    android:layout_marginBottom="@dimen/small_spacing"
                     android:textColor="@android:color/white"
                     android:id="@+id/textView_trackName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Title"
-                    android:textAppearance="?attr/textAppearanceBody1" />
+                    android:textAppearance="?attr/textAppearanceHeadline6" />
 
                 <TextView
                     android:textColor="@color/light_grey"
@@ -54,6 +55,7 @@
                     android:textAppearance="?attr/textAppearanceBody2" />
 
                 <TextView
+
                     android:textColor="@color/light_grey"
                     android:id="@+id/textView_price"
                     android:layout_width="match_parent"

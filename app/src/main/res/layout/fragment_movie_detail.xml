@@ -16,25 +16,46 @@
            android:orientation="vertical"
            android:layout_margin="20dp"
            >
-            <com.google.android.material.card.MaterialCardView
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="150dp"
-                app:cardElevation="4dp"
-                android:padding="10dp"
-                android:layout_margin="6dp"
-                app:cardUseCompatPadding="true"
-                app:cardPreventCornerOverlap="true"
-                app:cardBackgroundColor="@android:color/transparent"
-                >
-                <VideoView
-                    app:shapeAppearanceOverlay="@style/circleImageView"
-                    android:layout_marginBottom="@dimen/marginBottom"
-                    android:id="@+id/videoView1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="150dp"
-                    />
-            </com.google.android.material.card.MaterialCardView>
+
+           <com.google.android.material.card.MaterialCardView
+               android:layout_gravity="center"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               app:cardElevation="4dp"
+               android:padding="10dp"
+               android:layout_margin="6dp"
+               app:cardUseCompatPadding="true"
+               app:cardPreventCornerOverlap="true"
+               app:cardBackgroundColor="@android:color/black"
+               >
+
+               <FrameLayout
+                   android:layout_gravity="center"
+                   android:layout_width="wrap_content"
+                   android:layout_height="150dp"
+                   android:padding="10dp"
+                   android:layout_margin="6dp"
+
+                   >
+                   <VideoView
+                       app:shapeAppearanceOverlay="@style/circleImageView"
+                       android:layout_marginBottom="@dimen/marginBottom"
+                       android:id="@+id/videoView"
+                       android:layout_width="wrap_content"
+                       android:layout_height="150dp"
+                       />
+
+                   <ImageView
+                       android:visibility="gone"
+                       android:id="@+id/imageView_playButton"
+                       android:background="@drawable/ic_play_arrow"
+                       android:layout_gravity="center"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"/>
+               </FrameLayout>
+
+           </com.google.android.material.card.MaterialCardView>
+
 
            <View
                android:layout_marginBottom="@dimen/marginBottom"
@@ -60,6 +81,7 @@
                    android:layout_height="wrap_content"
                    android:orientation="vertical">
                    <TextView
+                       android:layout_marginBottom="@dimen/small_spacing"
                        android:textColor="@android:color/white"
                        android:id="@+id/textView_trackName"
                        android:layout_width="match_parent"

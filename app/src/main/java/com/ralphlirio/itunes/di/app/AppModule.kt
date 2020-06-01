@@ -25,7 +25,7 @@ class AppModule {
     @Provides
     fun provideRequestOptions(): RequestOptions =
         RequestOptions.placeholderOf(R.drawable.ic_icons8_itunes_100)
-            .error(R.drawable.ic_icons8_itunes_100)
+            .error(R.drawable.ic_error_image)
 
 
     @Singleton

@@ -86,14 +86,36 @@ class TrackDetail : BaseFragment() {
         textView_buyprice.text = track.currency.plus(" " + track.trackPrice)
         textView_rentprice.text = track.currency.plus(" " + track.trackRentalPrice)
 
-        val uri: Uri = Uri.parse(track.previewUrl)
-        videoView1.setVideoURI(uri)
-        videoView1.requestFocus()
-        videoView1.start()
+        setUpVideo(track.previewUrl!!)
 
         textView_artistName.text = track.artistName
         textView_releasedate.text = removeTimeFromDate(track.releaseDate!!)
         textView_duration.text = convertTime(track.trackTimeMillis)
+    }
+
+    /**
+     * Prepare video view
+     * waits for the video to load then show the play button
+     * @param videoPath variable that contains the video url to be played
+     */
+    private fun setUpVideo(videoPath: String) {
+        val uri: Uri = Uri.parse(videoPath)
+        videoView.setVideoURI(uri)
+        videoView.requestFocus()
+
+        videoView.setOnPreparedListener {
+            imageView_playButton.visibility = View.VISIBLE
+            videoView.setOnClickListener {
+                if (videoView.isPlaying) {
+                    videoView.pause()
+                    imageView_playButton.visibility = View.VISIBLE
+                } else {
+                    videoView.start()
+                    imageView_playButton.visibility = View.GONE
+                }
+            }
+        }
+
     }
 
     /**
