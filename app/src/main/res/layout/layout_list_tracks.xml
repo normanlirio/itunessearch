@@ -44,7 +44,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Title"
-                    android:textAppearance="?attr/textAppearanceHeadline6" />
+                    android:autoSizeTextType="uniform"
+                    android:textAppearance="?attr/textAppearanceBody2" />
 
                 <TextView
                     android:textColor="@color/light_grey"
@@ -52,6 +53,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Genre"
+                    android:autoSizeTextType="uniform"
                     android:textAppearance="?attr/textAppearanceBody2" />
 
                 <TextView
@@ -61,6 +63,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="14.99"
+                    android:autoSizeTextType="uniform"
                     android:textAppearance="?attr/textAppearanceBody2" />
             </LinearLayout>
         </LinearLayout>

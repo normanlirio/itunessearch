@@ -75,7 +75,7 @@ class AppModule {
                     /*
                      *  If there is Internet, get the cache that was stored within the last 5 seconds.
                      */
-                    request.newBuilder().header("Cache-Control", "public, max-age=" + 5).build()
+                    request.newBuilder().header("Cache-Control", "public, max-age=" + 60).build()
                 else
                     /*
                      *  If there is no Internet, get the cache that was within the last 7 days.

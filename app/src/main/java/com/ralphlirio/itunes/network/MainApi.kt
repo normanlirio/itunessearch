@@ -7,7 +7,7 @@ import retrofit2.http.Query
 
 interface MainApi {
 
-    @GET("/search")
+    @GET("search")
     fun getResults(
         @Query("term") term: String,
         @Query("country") country: String,

@@ -2,6 +2,7 @@ package com.ralphlirio.itunes.ui.detail
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -83,6 +84,7 @@ class TrackDetail : BaseFragment() {
         requestManager.load(track.artworkUrl100).into(imageView_header)
         textView_trackName.text = track.trackName
         textView_genre.text = track.primaryGenreName
+        Log.v("TEST", "TEST: ${track.trackHdPrice}")
         textView_buyprice.text = track.currency.plus(" " + track.trackPrice)
         textView_rentprice.text = track.currency.plus(" " + track.trackRentalPrice)
 
